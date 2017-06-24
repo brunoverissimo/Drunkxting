@@ -11,6 +11,16 @@ public class AddMessage : MonoBehaviour
     public GameObject MessageFrame;
 
 
+    [Header("Answer Time")]
+    public Image radialBar;
+    [Range(10, 20)]
+    public short timeForResponse;
+
+    private Coroutine counterRoutine;
+
+
+
+
     private float contentHeight;
 
     // Use this for initialization
@@ -67,6 +77,8 @@ public class AddMessage : MonoBehaviour
 
         message.text = text;
 
+        StopCoroutine(counterRoutine);
+
 
     }
 
@@ -81,6 +93,30 @@ public class AddMessage : MonoBehaviour
         Text message = frame.GetComponentInChildren<Text>();
 
         message.text = System.DateTime.Now.ToString();
+
+        counterRoutine = StartCoroutine(Counter());
+
+    }
+
+
+    IEnumerator Counter()
+    {
+        yield return new WaitForSeconds(0);
+
+        float time = 0;
+
+        while (radialBar.fillAmount > 0)
+        {
+            yield return new WaitForEndOfFrame();
+
+            time += Time.deltaTime;
+
+            radialBar.fillAmount = 1 - (time / timeForResponse);
+
+            Debug.Log(time);
+
+        }
+
 
     }
 
