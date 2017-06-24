@@ -3,43 +3,84 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AddMessage : MonoBehaviour {
+public class AddMessage : MonoBehaviour
+{
 
-
+    public GameObject scrollView;
     public GameObject content;
+    public GameObject MessageFrame;
 
 
-    private Font font;
+    private float contentHeight;
 
-	// Use this for initialization
-	void Start () {
-
-        font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
-
-    }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-
-
-    public void Message()
+    // Use this for initialization
+    void Start()
     {
 
-        GameObject message = new GameObject("Text");
+        //font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
+        //contentHeight = scrollView.GetComponent<RectTransform>().rect.height;
 
-        message.transform.parent = content.transform;
 
-        Text text = message.AddComponent<Text>();
+    }
 
-        text.text = System.DateTime.Now.ToString();
+    // Update is called once per frame
+    void Update()
+    {
 
-        text.font = font;
+    }
 
-        //string[] str = text.font.fontNames;
 
+
+    void Message(out GameObject frame)
+    {
+
+        frame = Instantiate(MessageFrame, content.transform) as GameObject;
+
+        float height = frame.GetComponent<RectTransform>().rect.height;
+
+        Vector2 size = content.GetComponent<RectTransform>().sizeDelta;
+
+        size.y += height;
+
+        content.GetComponent<RectTransform>().sizeDelta = size;
+
+        scrollView.GetComponent<ScrollRect>().verticalNormalizedPosition = 0;
+
+        //return frame;
+
+
+
+    }
+
+
+
+
+    public void Sender(string text)
+    {
+
+        GameObject frame;
+
+        Message(out frame);
+
+
+        Text message = frame.GetComponentInChildren<Text>();
+
+        message.text = text;
+
+
+    }
+
+
+    public void Receiver()
+    {
+
+        GameObject frame;
+
+        Message(out frame);
+
+        Text message = frame.GetComponentInChildren<Text>();
+
+        message.text = System.DateTime.Now.ToString();
 
     }
 
