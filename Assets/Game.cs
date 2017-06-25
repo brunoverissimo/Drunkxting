@@ -26,6 +26,9 @@ public class Game : MonoBehaviour {
     public GameObject buttonHolder;
     public GameObject scrollView;
     public GameObject content;
+
+    private VerticalLayoutGroup contentVerticalGroup;
+
     public AngryManager angryMeter;
 
     [Header("Messages")]
@@ -47,16 +50,15 @@ public class Game : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+
+        contentVerticalGroup = content.GetComponent<VerticalLayoutGroup>();
+
+
         source = GetComponent<AudioSource>();
         story = new Story(inkJSONAsset.text);
         source.clip = backgroundMusic;
         source.Play();
-        /**
-         *  Demetrio disse para não contar tempo na primeira pergunta. 
-         */
         RefreshStory(TIME_COUNTDOWN.NO,true);
-
-        
 
     }
 
@@ -158,7 +160,7 @@ public class Game : MonoBehaviour {
 
         Vector2 size = content.GetComponent<RectTransform>().sizeDelta;
 
-        size.y += height;
+        size.y += height + contentVerticalGroup.spacing;
 
         content.GetComponent<RectTransform>().sizeDelta = size;
 
