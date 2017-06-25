@@ -33,12 +33,12 @@ Felipe
 				* * * Perhaps I'm not on my best mood[...], SINCE YOU DON'T STOP COMPLAINING. -> babaca_path4
 				* * * Please, don't be mad! -> drunk_path4
 				* * * ?
-				
+
 			- - - -	(babaca_path4) Stop right there! Before someone gets hurt here! Remember last time?
 					* * * * Yeah, you are right. I remember[] you always getting upset over the little things -> babaca_path5
 					* * * * ?
 					* * * *	?
-					
+
 				- - - - - (babaca_path5) LITTLE THINGS!? You know how much I care about you!
 							* * * * * Or so you say... -> babaca_path6
 							* * * * * ?
@@ -58,7 +58,7 @@ Felipe
 											* * * * * * * * ... -> last
 											* * * * * * * * I'm, sorry[...], Fran, I thought you enjoyed our night :/ -> last
 											* * * * * * * * I... -> last
-										
+
 
 -	(drunk_path1) Yesterday? We didn't meet yesterday!
 	* Shall we talk about [it?]memory problems again? -> babaca_path3
@@ -77,13 +77,13 @@ Felipe
 				
 			- - - - (drunk_path4) See? That's what I get for being nice to you. Tell me what happened yesterday.
 					* * * * Nothing[.], you're imagining things. -> babaca_path3
-					* * * * I think I[ kissed the wrong person -_-] killed the wrong person -_- -> drunk_path5
+					* * * * I think I[ kissed the wrong person...] killed the wrong person... -> drunk_path5
 					* * * * Nevermind //-> reg_path1
 
 				- - - - - (drunk_path5) YOU WHAT!? OH MY GOD!!! OH MY GOD!!!
 							* * * * * NO! Stupid corrector![] I said I KISSED somebody. -> drunk_path7
 							* * * * * Come on, it's not the end of the world... -> drunk_path6
-							* * * * * JK... -> drunk_path6
+							* * * * * JK... //-> reg_path4
 
 					- - - - - - (drunk_path6) I can't believe it! I'm calling the Police!
 								* * * * * * I don't[...] care! -> babaca_path8
@@ -99,8 +99,7 @@ Felipe
 - (last) Do me a last favor and don't ever talk to me again
 
 -> END
-		
-		
+
 
 /*
 -	(reg_path1) Really? Tell me what happened.

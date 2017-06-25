@@ -33,4 +33,7 @@ MonoBehaviour:
   - compileAutomatically: 0
     inkAsset: {fileID: 102900000, guid: bc63f27360d06a44d9764f12d1a0de17, type: 3}
     jsonAsset: {fileID: 4900000, guid: 5a5e84d3302e32945873e49f71b7a19c, type: 3}
+  - compileAutomatically: 0
+    inkAsset: {fileID: 102900000, guid: 9ed5c0b7d6ef0ce4ebdbe8bcccd058b4, type: 3}
+    jsonAsset: {fileID: 4900000, guid: 70f593001c7850d47b5af756e0a703be, type: 3}
   compilationStack: []
