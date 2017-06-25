@@ -181,6 +181,7 @@ public class Game : MonoBehaviour {
         {
             StopCoroutine(counterRoutine);
         }
+        timeManager.ResetScale();
         angryMeter.addAngriness(10);
         story.ChooseChoiceIndex(choice);
         RefreshStory(TIME_COUNTDOWN.YES);

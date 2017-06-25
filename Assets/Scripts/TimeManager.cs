@@ -28,10 +28,7 @@ public class TimeManager : MonoBehaviour {
 
         while (LoadingBar.GetComponent<Image>().fillAmount > 0)
         {
-            if (stopCorrotine)
-            {
-                break;
-            }
+            
             yield return new WaitForEndOfFrame();
 
             time += Time.deltaTime;
@@ -43,6 +40,10 @@ public class TimeManager : MonoBehaviour {
 
         Game.PickRandomChoice();
     }
+    public void ResetScale()
+    {
+        LoadingBar.GetComponent<Image>().fillAmount = 1;
+    }
 
-    
+
 }
