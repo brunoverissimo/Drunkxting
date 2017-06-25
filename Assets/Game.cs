@@ -19,15 +19,26 @@ public class Game : MonoBehaviour {
     private TextAsset inkJSONAsset;
     private Story story;
 
+    public Text textButton1;
+    public Text textButton2;
+    public Text textButton3;
 
-
+    public GameObject buttonHolder;
     public GameObject scrollView;
     public GameObject content;
-    public GameObject MessageFrame;
+    public AngryManager angryMeter;
 
+    [Header("Messages")]
+    public GameObject MessageFrame;
+    public GameObject MyMessageFrame;
+
+    [Header("Sounds")]
+    public AudioClip newMessageSfx;
+    public AudioClip backgroundMusic;
+    private AudioSource source;
 
     [Header("Answer Time")]
-    public Image radialBar;
+    public TimeManager timeManager;
     [Range(5, 20)]
     public short timeForResponse;
 
@@ -36,44 +47,90 @@ public class Game : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
+        source = GetComponent<AudioSource>();
         story = new Story(inkJSONAsset.text);
-
-
-
+        source.clip = backgroundMusic;
+        source.Play();
         /**
          *  Demetrio disse para não contar tempo na primeira pergunta. 
          */
-        RefreshStory(TIME_COUNTDOWN.YES);
+        RefreshStory(TIME_COUNTDOWN.NO,true);
 
+        
 
     }
 
-    private void RefreshStory(TIME_COUNTDOWN TimeforAnswer)
+
+    private void RefreshStory(TIME_COUNTDOWN TimeforAnswer, Boolean showFirstMessageAsOther = false)
     {
+        buttonHolder.SetActive(false);
+        buttonHolder.transform.GetChild(0).gameObject.SetActive(false);
+        buttonHolder.transform.GetChild(1).gameObject.SetActive(false);
+        buttonHolder.transform.GetChild(2).gameObject.SetActive(false);
+        timeManager.gameObject.SetActive(false);
+
+        if (TimeforAnswer == TIME_COUNTDOWN.YES)
+        {
+            timeManager.gameObject.SetActive(true);
+        }
+
+       
+
+        if (!showFirstMessageAsOther)
+        {
+            string text = story.Continue().Trim();
+            CreateContentView(text, true);
+        }
 
         while (story.canContinue)
         {
             string text = story.Continue().Trim();
-            CreateContentView(text);
+            CreateContentView(text,false);
         }
 
+        if (story.currentChoices.Count > 0) {
+            buttonHolder.GetComponent<RectTransform>().sizeDelta = new Vector2(300,100 * story.currentChoices.Count);
+            buttonHolder.SetActive(true);
+        }
+        else
+        {
+            //END
+            timeManager.gameObject.SetActive(false);
+
+        }
+
+        for (int i = 0; i < story.currentChoices.Count; i++)
+        {
+            if(i == 0)
+            {
+                buttonHolder.transform.GetChild(0).gameObject.SetActive(true);
+                textButton1.text = story.currentChoices[i].text;
+            }
+            else if( i == 1)
+            {
+
+                textButton2.text = story.currentChoices[i].text;
+                buttonHolder.transform.GetChild(1).gameObject.SetActive(true);
+            }
+            else
+            {
+                textButton3.text = story.currentChoices[i].text;
+                buttonHolder.transform.GetChild(2).gameObject.SetActive(true);
+            }
+        }
 
         if (TimeforAnswer == TIME_COUNTDOWN.YES)
         {
-            counterRoutine = StartCoroutine(Countdown());
+            counterRoutine = StartCoroutine(timeManager.Countdown());
         }
-
-
-
     }
 
-    void CreateContentView(string text)
+    void CreateContentView(string text,Boolean isMyMessage)
     {
 
         GameObject frame;
 
-        Message(out frame);
+        Message(out frame, isMyMessage);
 
         Text message = frame.GetComponentInChildren<Text>();
 
@@ -83,10 +140,19 @@ public class Game : MonoBehaviour {
 
 
 
-    void Message(out GameObject frame)
+    void Message(out GameObject frame, Boolean isMyMessage)
     {
 
-        frame = Instantiate(MessageFrame, content.transform) as GameObject;
+        if (isMyMessage)
+        {
+            frame = Instantiate(MyMessageFrame, content.transform) as GameObject;
+
+        }
+        else
+        {
+            frame = Instantiate(MessageFrame, content.transform) as GameObject;
+            source.PlayOneShot(newMessageSfx);
+        }
 
         float height = frame.GetComponent<RectTransform>().rect.height;
 
@@ -98,43 +164,27 @@ public class Game : MonoBehaviour {
 
         scrollView.GetComponent<ScrollRect>().verticalNormalizedPosition = 0;
 
-        //return frame;
-
-
 
     }
 
-
-
-    /*
-     * Processamento paralelo para contagem regressiva 
-     */
-    IEnumerator Countdown()
+    public void PickRandomChoice()
     {
-        yield return new WaitForSeconds(0);
-
-        float time = 0;
-
-        while (radialBar.fillAmount > 0)
+        if (story.currentChoices.Count > 0)
         {
-            yield return new WaitForEndOfFrame();
-
-            time += Time.deltaTime;
-
-            radialBar.fillAmount = 1 - (time / timeForResponse);
-
-            Debug.Log(time);
+            PickAChoice(UnityEngine.Random.Range(0, story.currentChoices.Count));
         }
-
-        PickRandomChoice();
     }
 
-
-    void PickRandomChoice()
+    public void PickAChoice(int choice)
     {
-        Debug.Log("Pick Random");
+        if (counterRoutine != null)
+        {
+            StopCoroutine(counterRoutine);
+        }
+        angryMeter.addAngriness(10);
+        story.ChooseChoiceIndex(choice);
+        RefreshStory(TIME_COUNTDOWN.YES);
     }
-
 
 
     // Update is called once per frame

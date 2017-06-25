@@ -31,10 +31,9 @@ public class AngryManager : MonoBehaviour {
     {
         if(currentAngry >= 0)
         {
-            currentAngry -= 10 * Time.deltaTime;
-            if(timer% colorChangeRate == 0)
+            //currentAngry -= 10 * Time.deltaTime;
+           /* if(timer% colorChangeRate == 0)
             {
-
                 if (red < 255)
                 {
                     red++;
@@ -49,15 +48,27 @@ public class AngryManager : MonoBehaviour {
                 }
             }
             timer++;
-
+            */
         }
         angryBar.GetComponent<Image>().fillAmount = currentAngry / 100;
         angryBar.GetComponent<Image>().color = new Color32(red, green, blue, alpha);
     }
 
-    public void addAngriness(float angryAmount)
+    public void addAngriness(byte angryAmount)
     {
         currentAngry -= angryAmount;
+        if (red < 255)
+        {
+            red += angryAmount;
+        }
+        if (green > 0)
+        {
+            green -= angryAmount;
+        }
+        if (blue > 0)
+        {
+            blue -= angryAmount;
+        }
     }
     public void removeAngriness(float angryAmount)
     {
