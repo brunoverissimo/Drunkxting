@@ -14,9 +14,15 @@ public class Game : MonoBehaviour {
     }
 
 
+    [Header("Panels")]
+    public GameObject menuPanel;
+    public GameObject gamePanel;
+
+
     [Header("Story")]
     [SerializeField]
     private TextAsset inkJSONAsset;
+    [SerializeField]
     private Story story;
 
     public Text textButton1;
@@ -41,11 +47,15 @@ public class Game : MonoBehaviour {
     private AudioSource source;
 
     [Header("Answer Time")]
-    public TimeManager timeManager;
+    //public TimeManager timeManager;
+    public Image timeManager;
+    public Transform LoadingBar;
     [Range(5, 20)]
     public short timeForResponse;
 
     private Coroutine counterRoutine;
+
+    public GameObject endButton;
 
 
 
@@ -59,11 +69,33 @@ public class Game : MonoBehaviour {
 
 
         source = GetComponent<AudioSource>();
-        story = new Story(inkJSONAsset.text);
+        
+
         source.clip = backgroundMusic;
         source.Play();
-        RefreshStory(TIME_COUNTDOWN.NO,true);
 
+    }
+
+
+    public void PlayStory()
+    {
+        if (content.transform.childCount > 0)
+        {
+            foreach (Transform t in content.transform)
+            {
+                Destroy(t.gameObject);
+            }
+
+            Vector2 size = content.GetComponent<RectTransform>().sizeDelta;
+
+            size.y = 10;
+
+            content.GetComponent<RectTransform>().sizeDelta = size;
+
+        }
+
+        story = new Story(inkJSONAsset.text);
+        RefreshStory(TIME_COUNTDOWN.NO, true);
     }
 
 
@@ -80,17 +112,18 @@ public class Game : MonoBehaviour {
             timeManager.gameObject.SetActive(true);
         }
 
-       
 
+        string text;
         if (!showFirstMessageAsOther)
         {
-            string text = story.Continue().Trim();
+            text = story.Continue().Trim();
             CreateContentView(text, true);
         }
 
+        
         while (story.canContinue)
         {
-            string text = story.Continue().Trim();
+            text = story.Continue().Trim();
             CreateContentView(text,false);
         }
 
@@ -102,6 +135,8 @@ public class Game : MonoBehaviour {
         {
             //END
             timeManager.gameObject.SetActive(false);
+
+            EndGame();
 
         }
 
@@ -125,9 +160,9 @@ public class Game : MonoBehaviour {
             }
         }
 
-        if (TimeforAnswer == TIME_COUNTDOWN.YES)
+        if (TimeforAnswer == TIME_COUNTDOWN.YES && story.currentChoices.Count > 0)
         {
-            counterRoutine = StartCoroutine(timeManager.Countdown());
+            counterRoutine = StartCoroutine(Countdown());
         }
     }
 
@@ -145,6 +180,29 @@ public class Game : MonoBehaviour {
 
         messagesList.Add(frame);
 
+    }
+
+
+
+    public IEnumerator Countdown()
+    {
+        yield return new WaitForSeconds(0);
+
+        float time = 0;
+
+        while (LoadingBar.GetComponent<Image>().fillAmount > 0)
+        {
+
+            yield return new WaitForEndOfFrame();
+
+            time += Time.deltaTime;
+
+            LoadingBar.GetComponent<Image>().fillAmount = 1 - (time / timeForResponse);
+
+
+        }
+
+        PickRandomChoice();
     }
 
 
@@ -220,10 +278,46 @@ public class Game : MonoBehaviour {
         {
             StopCoroutine(counterRoutine);
         }
-        timeManager.ResetScale();
+        ResetScale();
         angryMeter.addAngriness(10);
         story.ChooseChoiceIndex(choice);
         RefreshStory(TIME_COUNTDOWN.YES);
+    }
+
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
+    public void NewGame()
+    {
+        endButton.SetActive(false);
+        menuPanel.SetActive(false);
+        gamePanel.SetActive(true);
+
+        PlayStory();
+
+    }
+
+    public void EndGame()
+    {
+
+        endButton.SetActive(true);
+
+    }
+
+    public void ReturnMainMenu()
+    {
+
+        menuPanel.SetActive(true);
+        gamePanel.SetActive(false);
+
+    }
+
+    public void ResetScale()
+    {
+        LoadingBar.GetComponent<Image>().fillAmount = 1;
     }
 
 }

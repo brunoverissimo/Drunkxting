@@ -186,7 +186,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d448224a2507e29479ab65ae34d6b7cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inkJSONAsset: {fileID: 4900000, guid: ddbe1ee6b9aa5ed4385056ffe890a012, type: 3}
+  menuPanel: {fileID: 0}
+  gamePanel: {fileID: 0}
+  inkJSONAsset: {fileID: 4900000, guid: 479f591d8b121e045834057867cf2440, type: 3}
   textButton1: {fileID: 0}
   textButton2: {fileID: 0}
   textButton3: {fileID: 0}
@@ -201,7 +203,9 @@ MonoBehaviour:
   newMessageSfx: {fileID: 8300000, guid: 7b2a1944e693ad24abcb675dde5aff3b, type: 3}
   backgroundMusic: {fileID: 8300000, guid: fdce19ae0e5703b43aa3abd0ab0c8fcf, type: 3}
   timeManager: {fileID: 0}
+  LoadingBar: {fileID: 0}
   timeForResponse: 5
+  endButton: {fileID: 0}
 --- !u!124 &124117327243726322
 Behaviour:
   m_ObjectHideFlags: 1

@@ -10,6 +10,7 @@ namespace Ink.Runtime
     /// A Story is the core class that represents a complete Ink narrative, and
     /// manages the evaluation and state of it.
     /// </summary>
+    [Serializable]
 	public class Story : Runtime.Object
 	{
         /// <summary>
