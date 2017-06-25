@@ -1,9 +1,9 @@
 - Hi, honey!
 * Hi
 	How are you?
-	* * (babaca) I was better before you texted me
+	* * (babaca) I was better before[...] you texted me
 		Geez... I just wanted to know how you were...
-		* * * (drunk) I'm trying to be ok
+		* * * (drunk) I'm trying to[...] be ok
 			What happened?
 			* * * * (drunk) I just [kissed somebody] killed somebody
 				YOU WHAT!? OH MY GOD!!! OH MY GOD!!!
@@ -20,18 +20,22 @@
 				* * * * * (reg) It was just a typo
 			* * * * ?
 			* * * * ?
-		* * * (babaca) I'm ok, are you satisfied now?
+		* * * (babaca) I'm ok[...], are you satisfied now?
 			I would be if you showed a little more consideration!
-			* * * * (babaca) You don't have to get upset over the little things
-				LITTLE THINGS!? You know that I care about you.
-				* * * * * (babaca) Or so you say...
-					I DO! AND YOU KNOW IT! I thought you felt the same way...
-					* * * * * * (babaca) Think again
-								MAYBE I SHOULD STOP HAVING YOU IN SUCH HIGH CONSIDERATION, RIGHT!?
-								* * * * * * * (babaca) You can do whatever you want...
-										WHY ARE YOU DOING THIS TO ME?
-										* * * * * * * * (babaca) ...
-												Do me a last favor and don't ever talk to me again -> DONE
+			* * * * You're right. Maybe I should[...] get you a dog, since you need that much attention.
+				WHAT!? What's wrong with you?
+				* * * * * Perhaps I'm not on my best mood[...], SINCE YOU DON'T STOP COMPLAINING.
+					Stop right there! Before someone gets hurt here! Remember last time?
+					* * * * * *(babaca) Yeah, you are right. I remember[] you always getting upset over the little things
+						LITTLE THINGS!? You know how much I care about you.
+						* * * * * * * (babaca) Or so you say...
+							I DO! And I thought you felt the same way...
+							* * * * * * * * (babaca) Sorry[...], think again!
+									MAYBE I SHOULD STOP HAVING YOU IN SUCH HIGH CONSIDERATION, RIGHT!?
+									* * * * * * * * * (babaca) Ok now, take a deep breath[...] and stop talking.
+											WHY ARE YOU DOING THIS TO ME!?
+											* * * * * * * * * * (babaca) ...
+														Do me a last favor and don't ever talk to me again -> DONE
 			* * * * (reg) OK
 			* * * * (drunk) ?
 		* * * (reg) Nevermind
