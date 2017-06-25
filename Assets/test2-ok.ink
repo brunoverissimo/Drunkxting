@@ -72,7 +72,7 @@ Felipe
 	
 		- - - (drunk_path3) Are you drunk? You know my name has no F!
 				* * * ?
-				* * * Seriously? Who are you? :O > drunk_path4
+				* * * Seriously? Who are you? :O -> drunk_path4
 				* * * Oh...
 				
 			- - - - (drunk_path4) See? That's what I get for being nice to you. Tell me what happened yesterday.
