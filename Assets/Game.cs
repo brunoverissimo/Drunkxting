@@ -131,9 +131,6 @@ public class Game : MonoBehaviour {
         }
     }
 
-    //GameObject gFrame;
-    //bool lateupdate;
-
     void CreateContentView(string text,Boolean isMyMessage)
     {
 
@@ -146,44 +143,7 @@ public class Game : MonoBehaviour {
 
         message.text = text;
 
-
-
         messagesList.Add(frame);
-
-        //ResizeMessageFrame(frame);
-        //gFrame = frame;
-        //lateupdate = true;
-
-    }
-
-    private void ResizeMessageFrame(GameObject frame)
-    {
-
-
-        RectTransform rect = frame.GetComponentInChildren<Text>().gameObject.GetComponent<RectTransform>();
-
-        //foreach(RectTransform child in frame.transform)
-        //{
-
-        //    if (child.gameObject.tag == "Message")
-        //    {
-
-
-        //        RectTransform rect = child.GetComponent<RectTransform>();
-
-        //    }
-
-        //}
-
-        //float height = frame.GetComponent<RectTransform>().rect.height;
-
-        //Vector2 size = content.GetComponent<RectTransform>().sizeDelta;
-
-        //size.y += height + contentVerticalGroup.spacing;
-
-        //content.GetComponent<RectTransform>().sizeDelta = size;
-
-        //scrollView.GetComponent<ScrollRect>().verticalNormalizedPosition = 0;
 
     }
 
@@ -207,7 +167,7 @@ public class Game : MonoBehaviour {
                 RectTransform rectF = frame.GetComponent<RectTransform>();
                 RectTransform rect = frame.GetComponentInChildren<Text>().gameObject.GetComponent<RectTransform>();
 
-                rectF.sizeDelta = new Vector2(rectF.sizeDelta.x, rect.sizeDelta.y + 15);
+                rectF.sizeDelta = new Vector2(rectF.sizeDelta.x, rect.sizeDelta.y + 10);
 
 
                 height += (rectF.sizeDelta.y + contentVerticalGroup.spacing);
@@ -224,27 +184,6 @@ public class Game : MonoBehaviour {
 
             scrollView.GetComponent<ScrollRect>().verticalNormalizedPosition = 0;
 
-
-
-
-            //RectTransform rectF = gFrame.GetComponent<RectTransform>();
-            //RectTransform rect = gFrame.GetComponentInChildren<Text>().gameObject.GetComponent<RectTransform>();
-
-            //rectF.sizeDelta =  new Vector2(rectF.sizeDelta.x,  rect.sizeDelta.y + 15);
-
-
-
-            //Vector2 size = content.GetComponent<RectTransform>().sizeDelta;
-
-            //size.y += rectF.sizeDelta.y + contentVerticalGroup.spacing;
-
-            //content.GetComponent<RectTransform>().sizeDelta = size;
-
-            //scrollView.GetComponent<ScrollRect>().verticalNormalizedPosition = 0;
-
-
-
-            // lateupdate = false;
         }
 
 
@@ -256,25 +195,13 @@ public class Game : MonoBehaviour {
         if (isMyMessage)
         {
             frame = Instantiate(MyMessageFrame, content.transform) as GameObject;
-            //frame = Instantiate(MyMessageFrame) as GameObject;
 
         }
         else
         {
             frame = Instantiate(MessageFrame, content.transform) as GameObject;
-            //frame = Instantiate(MessageFrame) as GameObject;
             source.PlayOneShot(newMessageSfx);
         }
-
-        //float height = frame.GetComponent<RectTransform>().rect.height;
-
-        //Vector2 size = content.GetComponent<RectTransform>().sizeDelta;
-
-        //size.y += height + contentVerticalGroup.spacing;
-
-        //content.GetComponent<RectTransform>().sizeDelta = size;
-
-        //scrollView.GetComponent<ScrollRect>().verticalNormalizedPosition = 0;
 
 
     }
@@ -299,9 +226,4 @@ public class Game : MonoBehaviour {
         RefreshStory(TIME_COUNTDOWN.YES);
     }
 
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
 }
