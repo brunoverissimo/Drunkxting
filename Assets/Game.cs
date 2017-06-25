@@ -26,6 +26,9 @@ public class Game : MonoBehaviour {
     public GameObject buttonHolder;
     public GameObject scrollView;
     public GameObject content;
+
+    private VerticalLayoutGroup contentVerticalGroup;
+
     public AngryManager angryMeter;
 
     [Header("Messages")]
@@ -45,18 +48,21 @@ public class Game : MonoBehaviour {
     private Coroutine counterRoutine;
 
 
+
+    private List<GameObject> messagesList = new List<GameObject>();
+
+
     // Use this for initialization
     void Start () {
+
+        contentVerticalGroup = content.GetComponent<VerticalLayoutGroup>();
+
+
         source = GetComponent<AudioSource>();
         story = new Story(inkJSONAsset.text);
         source.clip = backgroundMusic;
         source.Play();
-        /**
-         *  Demetrio disse para não contar tempo na primeira pergunta. 
-         */
         RefreshStory(TIME_COUNTDOWN.NO,true);
-
-        
 
     }
 
@@ -125,44 +131,150 @@ public class Game : MonoBehaviour {
         }
     }
 
+    //GameObject gFrame;
+    //bool lateupdate;
+
     void CreateContentView(string text,Boolean isMyMessage)
     {
 
         GameObject frame;
 
-        Message(out frame, isMyMessage);
+        GetMessageFrame(out frame, isMyMessage);
+
 
         Text message = frame.GetComponentInChildren<Text>();
 
         message.text = text;
 
+
+
+        messagesList.Add(frame);
+
+        //ResizeMessageFrame(frame);
+        //gFrame = frame;
+        //lateupdate = true;
+
+    }
+
+    private void ResizeMessageFrame(GameObject frame)
+    {
+
+
+        RectTransform rect = frame.GetComponentInChildren<Text>().gameObject.GetComponent<RectTransform>();
+
+        //foreach(RectTransform child in frame.transform)
+        //{
+
+        //    if (child.gameObject.tag == "Message")
+        //    {
+
+
+        //        RectTransform rect = child.GetComponent<RectTransform>();
+
+        //    }
+
+        //}
+
+        //float height = frame.GetComponent<RectTransform>().rect.height;
+
+        //Vector2 size = content.GetComponent<RectTransform>().sizeDelta;
+
+        //size.y += height + contentVerticalGroup.spacing;
+
+        //content.GetComponent<RectTransform>().sizeDelta = size;
+
+        //scrollView.GetComponent<ScrollRect>().verticalNormalizedPosition = 0;
+
     }
 
 
+    private void OnPreRender()
+    {
 
-    void Message(out GameObject frame, Boolean isMyMessage)
+        float height = 0;
+
+        if (messagesList.Count > 0)
+        {
+
+            while (messagesList.Count > 0)
+            {
+
+                GameObject frame = messagesList[0];
+
+                //frame.transform.SetParent(content.transform);
+
+
+                RectTransform rectF = frame.GetComponent<RectTransform>();
+                RectTransform rect = frame.GetComponentInChildren<Text>().gameObject.GetComponent<RectTransform>();
+
+                rectF.sizeDelta = new Vector2(rectF.sizeDelta.x, rect.sizeDelta.y + 15);
+
+
+                height += (rectF.sizeDelta.y + contentVerticalGroup.spacing);
+
+                messagesList.RemoveAt(0);
+
+            }
+
+            Vector2 size = content.GetComponent<RectTransform>().sizeDelta;
+
+            size.y += height;
+
+            content.GetComponent<RectTransform>().sizeDelta = size;
+
+            scrollView.GetComponent<ScrollRect>().verticalNormalizedPosition = 0;
+
+
+
+
+            //RectTransform rectF = gFrame.GetComponent<RectTransform>();
+            //RectTransform rect = gFrame.GetComponentInChildren<Text>().gameObject.GetComponent<RectTransform>();
+
+            //rectF.sizeDelta =  new Vector2(rectF.sizeDelta.x,  rect.sizeDelta.y + 15);
+
+
+
+            //Vector2 size = content.GetComponent<RectTransform>().sizeDelta;
+
+            //size.y += rectF.sizeDelta.y + contentVerticalGroup.spacing;
+
+            //content.GetComponent<RectTransform>().sizeDelta = size;
+
+            //scrollView.GetComponent<ScrollRect>().verticalNormalizedPosition = 0;
+
+
+
+            // lateupdate = false;
+        }
+
+
+    }
+
+    void GetMessageFrame(out GameObject frame, Boolean isMyMessage)
     {
 
         if (isMyMessage)
         {
             frame = Instantiate(MyMessageFrame, content.transform) as GameObject;
+            //frame = Instantiate(MyMessageFrame) as GameObject;
 
         }
         else
         {
             frame = Instantiate(MessageFrame, content.transform) as GameObject;
+            //frame = Instantiate(MessageFrame) as GameObject;
             source.PlayOneShot(newMessageSfx);
         }
 
-        float height = frame.GetComponent<RectTransform>().rect.height;
+        //float height = frame.GetComponent<RectTransform>().rect.height;
 
-        Vector2 size = content.GetComponent<RectTransform>().sizeDelta;
+        //Vector2 size = content.GetComponent<RectTransform>().sizeDelta;
 
-        size.y += height;
+        //size.y += height + contentVerticalGroup.spacing;
 
-        content.GetComponent<RectTransform>().sizeDelta = size;
+        //content.GetComponent<RectTransform>().sizeDelta = size;
 
-        scrollView.GetComponent<ScrollRect>().verticalNormalizedPosition = 0;
+        //scrollView.GetComponent<ScrollRect>().verticalNormalizedPosition = 0;
 
 
     }

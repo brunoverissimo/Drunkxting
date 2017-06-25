@@ -121,4 +121,12 @@ public class AddMessage : MonoBehaviour
     }
 
 
+
+    private void OnPreRender()
+    {
+
+    }
+
+
 }
+
